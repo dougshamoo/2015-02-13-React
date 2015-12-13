@@ -18,7 +18,6 @@ var App = React.createClass({
 
   handleStoreChange () {
     this.setState(ContactsStore.getState());
-    console.log(this.state);
   },
 
   removeContact (contact) {
