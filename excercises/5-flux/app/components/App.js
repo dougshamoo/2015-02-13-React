@@ -18,11 +18,24 @@ var App = React.createClass({
 
   handleStoreChange () {
     this.setState(ContactsStore.getState());
+    console.log(this.state);
+  },
+
+  removeContact (contact) {
+    ViewActionCreators.removeContact(contact);
   },
 
   renderContacts () {
     return this.state.contacts.map((contact) => {
-      return <li>{contact.first} {contact.last}</li>;
+      return (
+          <li>
+            {contact.first} {contact.last}
+            <button
+              onClick={this.removeContact.bind(this, contact)}>
+              Remove
+            </button>
+          </li>
+      )
     });
   },
 

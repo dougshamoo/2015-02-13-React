@@ -7,7 +7,12 @@ var ApiUtils = {
     xhr.getJSON(`${API}/contacts`, (err, res) => {
       ServerActionCreators.loadedContacts(res.contacts);
     });
-  }
+  },
+  removeContact (contact) {
+    xhr.deleteJSON(`${API}/contacts/${contact.id}`, () => {
+      ServerActionCreators.removedContact(contact);
+    });
+  },
 };
 
 module.exports = ApiUtils;

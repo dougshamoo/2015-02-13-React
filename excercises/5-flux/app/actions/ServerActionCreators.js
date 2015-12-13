@@ -7,7 +7,13 @@ var ServerActionCreators = {
       type: ActionTypes.CONTACTS_LOADED,
       contacts: contacts
     });
-  }
+  },
+  removedContact (contact) {
+    AppDispatcher.handleServerAction({
+      type: ActionTypes.CONTACT_REMOVED,
+      contact: contact,
+    });
+  },
 };
 
 module.exports = ServerActionCreators;
