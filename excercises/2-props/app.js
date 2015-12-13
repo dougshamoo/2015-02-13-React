@@ -20,27 +20,36 @@ var React = require('react');
 var md5 = require('MD5');
 var validateEmail = require('./validateEmail');
 var warning = require('react/lib/warning');
-
+var count = 0;
 var GRAVATAR_URL = "http://gravatar.com/avatar";
 
 var USERS = [
-  { id: 1, name: 'Ryan Florence', email: 'rpflorencegmail.com' },
+  { id: 1, name: 'Ryan Florence', email: 'rpflorence@gmail.com' },
   { id: 2, name: 'Michael Jackson', email: 'mjijackson@gmail.com' }
 ];
 
 var emailType = (props, propName, componentName) => {
   warning(
-    validateEmail(props.email),
-    `Invalid email '${props.email}' sent to 'Gravatar'. Check the render method of '${componentName}'.`
+    validateEmail(props[propName]),
+    `Invalid email '${props[propName]}' sent to 'Gravatar'. Check the render method of '${componentName}'.`
+  );
+};
+
+var sizeType = (props, propName, componentName) => {
+  warning(
+    props.size == parseInt(props.size),
+    `Invalid size '${props.size}' sent to 'Gravatar'. Check the render method of '${componentName}'.`
   );
 };
 
 var Gravatar = React.createClass({
   propTypes: {
-    email: emailType
+    email: emailType,
+    size: sizeType,
   },
 
   getDefaultProps () {
+    console.log(++count);
     return {
       size: 16
     };
@@ -56,7 +65,7 @@ var Gravatar = React.createClass({
 
 var App = React.createClass({
   render () {
-    var users = USERS.map((user) => {
+    var users = this.props.users.map((user) => {
       return (
         <li key={user.id}>
           <Gravatar email={user.email} size={36} /> {user.name}
@@ -72,7 +81,7 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.body);
+React.render(<App users={USERS}/>, document.body);
 
 //require('./tests').run(Gravatar, emailType);
 
